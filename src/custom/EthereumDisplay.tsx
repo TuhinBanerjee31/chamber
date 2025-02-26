@@ -38,15 +38,12 @@ const EthereumDisplay = () => {
   }, []);
 
   const getBalance = async (key: string) => {
-    const res = await axios.post(
-      "https://eth-mainnet.g.alchemy.com/v2/pxGCK6bf0tYaIXRNyeM2UXqVftmHcyj-",
-      {
-        jsonrpc: "2.0",
-        id: 1,
-        method: "eth_getBalance",
-        params: [key, "latest"],
-      }
-    );
+    const res = await axios.post(import.meta.env.VITE_ETH_URL, {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "eth_getBalance",
+      params: [key, "latest"],
+    });
 
     return ethers.formatEther(res.data.result);
   };
@@ -114,6 +111,7 @@ const EthereumDisplay = () => {
             <div className="mt-5 flex flex-col gap-8">
               {wallets.map((item, index) => (
                 <WalletBox
+                  key={item.path}
                   item={item}
                   index={index}
                   wallets={wallets}

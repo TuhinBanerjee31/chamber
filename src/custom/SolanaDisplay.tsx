@@ -42,15 +42,12 @@ const SolanaDisplay = () => {
 
   //Func to calculate balanace
   const getBalance = async (key: string) => {
-    const res = await axios.post(
-      "https://solana-mainnet.g.alchemy.com/v2/Uy9xxlD7hpAqEUCGk60v2P4worYVakdu",
-      {
-        jsonrpc: "2.0",
-        id: 1,
-        method: "getBalance",
-        params: [key],
-      }
-    );
+    const res = await axios.post(import.meta.env.VITE_SOL_URL, {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "getBalance",
+      params: [key],
+    });
 
     const val = res.data.result.value / LAMPORTS_PER_SOL;
 

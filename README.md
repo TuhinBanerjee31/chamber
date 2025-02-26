@@ -1,50 +1,47 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Chamber
 
-Currently, two official plugins are available:
+A web-based cryptocurrency wallet. It supports both the generation of new wallets and the entry of existing recovery phrases. It displays private keys, public keys and balance. Currently supporting 2 blockchains Solana and Ethereum.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
 
-## Expanding the ESLint configuration
+- Ensure you have Node.js, npm and typescript installed on your machine.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Clone the repository and add to your local environment.
 
-- Configure the top-level `parserOptions` property like this:
+- Install the required dependencies.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+  cd chamber
+  npm install
+```
+## Environment Variables
+
+Create a [Alchemy](https://www.alchemy.com/) account and get your rpc ready because to run this project, you will need to add the following environment variables to your .env file inside all the servers folder.
+
+`VITE_SOL_URL=`
+`VITE_ETH_URL=`
+
+
+## Deployment
+
+To deploy this project locally run:
+```bash
+  npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+To deploy this project globally run:
+```bash
+  npm run build
 ```
+And upload the dist folder over hosting server.
+## Optimization Plans
+
+- Implementing devnet functionalities
+- Adding more blockchains support
+- Transaction feature
+- UI improvement
+- Establishing own backend 
+
+
+
