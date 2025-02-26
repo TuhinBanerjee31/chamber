@@ -114,6 +114,7 @@ const SolanaDisplay = () => {
               title={"Solana"}
               generateWallet={generateWallet}
               setWallets={setWallets}
+              setMnemonic={setMnemonic}
               toast={toast}
             />
 

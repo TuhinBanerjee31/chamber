@@ -107,6 +107,7 @@ const EthereumDisplay = () => {
               title={"Ethereum"}
               generateWallet={generateWallet}
               setWallets={setWallets}
+              setMnemonic={setEthMnemonic}
               toast={toast}
             />
 

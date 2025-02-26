@@ -1,19 +1,20 @@
+import { Route, Routes } from "react-router";
 import "./App.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import CustomHeader from "./custom/CustomHeader";
-import CustomFooter from "./custom/CustomFooter";
-import CustomBody from "./custom/CustomBody";
+import Home from "./pages/Home";
+import SolanaWallets from "./pages/SolanaWallets";
+import EthereumWallets from "./pages/EthereumWallets";
 
 
 function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="font-mulish">
-        <CustomHeader />
-        <CustomBody />
-        <CustomFooter />
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/solana-wallets" element={<SolanaWallets />} />
+        <Route path="/ethereum-wallets" element={<EthereumWallets />} />
+      </Routes>
     </ThemeProvider>
   );
 }
