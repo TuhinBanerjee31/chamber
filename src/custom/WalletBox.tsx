@@ -8,7 +8,7 @@ const WalletBox = ({
   toast,
   showKey,
   setShowKey,
-}) => {
+} :any) => {
   return (
     <div key={item.path} className="border rounded-lg p-5">
       <div className="flex justify-between px-2">
@@ -83,14 +83,14 @@ const WalletBox = ({
               {showKey.includes(item.path) ? (
                 <Eye
                   onClick={() => {
-                    const arr = showKey.filter((val) => val != item.path);
+                    const arr = showKey.filter((val :string) => val != item.path);
                     setShowKey(arr);
                   }}
                   className="cursor-pointer transition-all"
                 />
               ) : (
                 <EyeOff
-                  onClick={() => setShowKey((prev) => [...prev, item.path])}
+                  onClick={() => setShowKey((prev :string[]) => [...prev, item.path])}
                   className="cursor-pointer transition-all"
                 />
               )}

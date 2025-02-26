@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/simpleButton";
 import { Input } from "@/components/ui/input";
 
-const GeneratePhrase = ({ mnemonic, generateWallet }) => {
+const GeneratePhrase = ({ mnemonic, generateWallet } :any) => {
   return (
     <div>
       <h1 className="text-4xl font-bold">Secret Recovery Phrase</h1>

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/simpleButton";
 import DailogBtn from "./DailogBtn";
 
-const FncWallet = ({ title, generateWallet, setWallets, setMnemonic, toast }) => {
+const FncWallet = ({ title, generateWallet, setWallets, setMnemonic, toast } :any) => {
   return (
     <div className="flex justify-between flex-col md:flex-row gap-3">
       <h1 className="text-3xl font-bold">{title} Wallets</h1>

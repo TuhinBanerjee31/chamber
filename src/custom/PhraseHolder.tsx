@@ -7,7 +7,7 @@ import {
 
 import { Copy } from "lucide-react";
 
-const PhraseHolder = ({ mnemonic, toast }) => {
+const PhraseHolder = ({ mnemonic, toast } :any) => {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
@@ -16,7 +16,7 @@ const PhraseHolder = ({ mnemonic, toast }) => {
         </AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-wrap justify-around gap-5 md:max-w-screen-md mx-auto py-8">
-            {mnemonic.split(" ").map((item, index) => (
+            {mnemonic.split(" ").map((item :string, index :number) => (
               <span
                 key={index}
                 className="min-w-[20%] py-2 px-4 text-xl bg-[#a1a1aa50] rounded transition-all cursor-pointer hover:bg-[#a1a1aa73]"

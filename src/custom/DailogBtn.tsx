@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/simpleButton";
 
-const DailogBtn = ({ setWallets, setMnemonic }) => {
+const DailogBtn = ({ setWallets, setMnemonic }: any) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
