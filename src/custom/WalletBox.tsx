@@ -16,7 +16,7 @@ const WalletBox = ({
         <Trash2
           className="text-red-900 transition-colors hover:text-red-800 cursor-pointer"
           onClick={() => {
-            const updatedWallet = wallets.filter((i) => {
+            const updatedWallet = wallets.filter((i :any) => {
               return i.path != item.path;
             });
             setWallets(updatedWallet);
