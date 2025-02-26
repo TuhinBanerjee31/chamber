@@ -1,5 +1,3 @@
-import React from 'react'
-
 const CustomFooter = () => {
   return (
     <div className='py-4'>
