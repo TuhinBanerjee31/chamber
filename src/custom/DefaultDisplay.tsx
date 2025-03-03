@@ -21,7 +21,7 @@ const DefaultDisplay = () => {
         <ChevronsDown size={50} className="animate-bounce mt-5" />
       </div>
 
-      <div className="min-h-[50vh] bg-[#66666d] m-4 rounded-lg py-10 px-5">
+      <div className="min-h-[50vh] bg-[#66666d3b] m-4 rounded-lg py-10 px-5">
         <h2 className="text-4xl font-semibold text-center">
           Availble Blockchains
         </h2>
@@ -29,7 +29,7 @@ const DefaultDisplay = () => {
           Choose a blockchain to get started.
         </h3>
 
-        <div className="max-w-screen-lg bg-[#b9bac0] mt-10 mx-auto rounded-md flex flex-col md:flex-row items-center">
+        <div className="max-w-screen-lg bg-white dark:bg-black border border-black dark:border-white mt-10 mx-auto rounded-md flex flex-col md:flex-row items-center">
           <img src={sol_logo} className="w-48" />
 
           <div className="p-4">
@@ -59,7 +59,7 @@ const DefaultDisplay = () => {
           </div>
         </div>
 
-        <div className="max-w-screen-lg bg-[#b9bac0] mt-10 mx-auto rounded-md flex flex-col md:flex-row items-center">
+        <div className="max-w-screen-lg bg-white dark:bg-black border border-black dark:border-white mt-10 mx-auto rounded-md flex flex-col md:flex-row items-center">
           <img src={eth_logo} className="w-48 p-5" />
 
           <div className="p-4">

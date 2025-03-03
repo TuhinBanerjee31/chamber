@@ -49,8 +49,9 @@ const EthereumDisplay = () => {
   };
 
   const generateWallet = async () => {
+    let val = ethMnemonic;
     if (ethMnemonic === "") {
-      const val = generateMnemonic();
+      val = generateMnemonic();
       setEthMnemonic(val);
 
       localStorage.setItem("ethMnemonic", JSON.stringify(val));
@@ -58,7 +59,7 @@ const EthereumDisplay = () => {
       console.log("Not present");
     }
 
-    const seed = mnemonicToSeedSync(ethMnemonic);
+    const seed = mnemonicToSeedSync(val);
     let path = `m/44'/60'/${wallets.length}'/0'`;
 
     if (wallets.length > 1 && path === wallets[wallets.length - 1].path) {

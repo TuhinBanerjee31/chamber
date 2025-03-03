@@ -56,21 +56,23 @@ const SolanaDisplay = () => {
 
   //Func to generate wallet
   const generateWallet = async () => {
+    let val = mnemonic;
     if (mnemonic === "") {
-      const val = generateMnemonic();
+      val = generateMnemonic();
       setMnemonic(val);
 
       localStorage.setItem("mnemonic", JSON.stringify(val));
 
       console.log("Not present");
     }
-
-    const seed = mnemonicToSeedSync(mnemonic);
+    console.log("mnemonic: ", val);
+    const seed = mnemonicToSeedSync(val);
 
     let path = `m/44'/501'/${wallets.length}'/0'`;
 
     if (wallets.length > 1 && path === wallets[wallets.length - 1].path) {
-      path = `m/44'/501'/${wallets.length + 1}'/0'`;
+      console.log("in");
+      path = `m/44'/501'/0'/${wallets.length + 1}'`;
     }
 
     const derivedSeed = derivePath(path, seed.toString("hex")).key;
@@ -89,6 +91,8 @@ const SolanaDisplay = () => {
       privateKey,
       balance,
     };
+
+    console.log("wallet: ", wallet);
 
     const updatedWallet = [...wallets, wallet];
     setWallets((prev) => [...prev, wallet]);
@@ -118,6 +122,7 @@ const SolanaDisplay = () => {
             <div className="mt-5 flex flex-col gap-8">
               {wallets.map((item, index) => (
                 <WalletBox
+                  key={index}
                   item={item}
                   index={index}
                   wallets={wallets}

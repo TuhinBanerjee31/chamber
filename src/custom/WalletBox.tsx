@@ -29,7 +29,7 @@ const WalletBox = ({
         />
       </div>
 
-      <div className="bg-[#a1a1aa50] rounded-md mt-5 my-2 p-4 flex flex-col gap-5">
+      <div className="bg-[#66666d3b] rounded-md mt-5 my-2 p-4 flex flex-col gap-5">
         <div>
           <h3 className="font-semibold text-xl">Public Key</h3>
           <span className="text-xs md:text-lg flex items-center justify-between">
