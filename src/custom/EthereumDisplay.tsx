@@ -12,7 +12,7 @@ import useWalletStore from "@/store/store";
 
 
 const EthereumDisplay = () => {
-  const [title, setTitle] = useState<string>("Ethereum");
+  const [title] = useState<string>("Ethereum");
   const [showKey, setShowKey] = useState<string[]>([]);
   const { toast } = useToast();
 

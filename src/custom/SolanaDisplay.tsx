@@ -2,7 +2,7 @@ import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { derivePath } from "ed25519-hd-key";
 import nacl from "tweetnacl";
 import { Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import bs58 from "bs58";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
@@ -14,7 +14,7 @@ import useWalletStore from "@/store/store";
 
 
 const SolanaDisplay = () => {
-  const [title, setTitle] = useState<string>("Solana");
+  const [title] = useState<string>("Solana");
   const [showKey, setShowKey] = useState<string[]>([]);
 
   const {solMnemonic, solWallet, setMnemonic, addWallet} = useWalletStore();
