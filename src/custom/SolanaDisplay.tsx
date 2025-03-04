@@ -10,35 +10,31 @@ import GeneratePhrase from "./GeneratePhrase";
 import PhraseHolder from "./PhraseHolder";
 import FncWallet from "./FncWallet";
 import WalletBox from "./WalletBox";
+import useWalletStore from "@/store/store";
 
-type Wallet = {
-  path: string;
-  publicKey: string;
-  privateKey: string;
-  balance: string;
-};
 
 const SolanaDisplay = () => {
-  const [mnemonic, setMnemonic] = useState("");
-  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [title, setTitle] = useState<string>("Solana");
   const [showKey, setShowKey] = useState<string[]>([]);
+
+  const {solMnemonic, solWallet, setMnemonic, addWallet} = useWalletStore();
 
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (
-      localStorage.getItem("mnemonic") &&
-      localStorage.getItem("solWallets")
-    ) {
-      const val = localStorage.getItem("mnemonic") || "";
-      const wlt = localStorage.getItem("solWallets") || "";
+  // useEffect(() => {
+  //   if (
+  //     localStorage.getItem("mnemonic") &&
+  //     localStorage.getItem("solWallets")
+  //   ) {
+  //     const val = localStorage.getItem("mnemonic") || "";
+  //     const wlt = localStorage.getItem("solWallets") || "";
 
-      setMnemonic(JSON.parse(val));
-      setWallets(JSON.parse(wlt));
-      console.log(val.split(" "));
-      console.log("on mount");
-    }
-  }, []);
+  //     setMnemonic(JSON.parse(val));
+  //     setWallets(JSON.parse(wlt));
+  //     console.log(val.split(" "));
+  //     console.log("on mount");
+  //   }
+  // }, []);
 
   //Func to calculate balanace
   const getBalance = async (key: string) => {
@@ -56,23 +52,23 @@ const SolanaDisplay = () => {
 
   //Func to generate wallet
   const generateWallet = async () => {
-    let val = mnemonic;
-    if (mnemonic === "") {
+    let val = solMnemonic;
+    if (val === "") {
       val = generateMnemonic();
-      setMnemonic(val);
+      setMnemonic(title, val);
 
-      localStorage.setItem("mnemonic", JSON.stringify(val));
+      // localStorage.setItem("mnemonic", JSON.stringify(val));
 
       console.log("Not present");
     }
     console.log("mnemonic: ", val);
     const seed = mnemonicToSeedSync(val);
 
-    let path = `m/44'/501'/${wallets.length}'/0'`;
+    let path = `m/44'/501'/${solWallet.length}'/0'`;
 
-    if (wallets.length > 1 && path === wallets[wallets.length - 1].path) {
+    if (solWallet.length > 1 && path === solWallet[solWallet.length - 1].path) {
       console.log("in");
-      path = `m/44'/501'/0'/${wallets.length + 1}'`;
+      path = `m/44'/501'/0'/${solWallet.length + 1}'`;
     }
 
     const derivedSeed = derivePath(path, seed.toString("hex")).key;
@@ -94,9 +90,8 @@ const SolanaDisplay = () => {
 
     console.log("wallet: ", wallet);
 
-    const updatedWallet = [...wallets, wallet];
-    setWallets((prev) => [...prev, wallet]);
-    localStorage.setItem("solWallets", JSON.stringify(updatedWallet));
+    addWallet(title, wallet);
+    // localStorage.setItem("solWallets", JSON.stringify(updatedWallet));
     toast({
       title: "Here You Go",
       description: "Your solana wallet has been generated successfully.",
@@ -105,28 +100,25 @@ const SolanaDisplay = () => {
 
   return (
     <div className="min-h-[75vh] max-w-screen-xl mx-auto px-5 pb-10">
-      <GeneratePhrase mnemonic={mnemonic} generateWallet={generateWallet} />
-      {mnemonic && (
+      <GeneratePhrase mnemonic={solMnemonic} generateWallet={generateWallet} />
+      {solMnemonic && (
         <>
-          <PhraseHolder mnemonic={mnemonic} toast={toast} />
+          <PhraseHolder mnemonic={solMnemonic} toast={toast} />
 
           <div className="py-14 px-2">
             <FncWallet
-              title={"Solana"}
+              title={title}
               generateWallet={generateWallet}
-              setWallets={setWallets}
-              setMnemonic={setMnemonic}
               toast={toast}
             />
 
             <div className="mt-5 flex flex-col gap-8">
-              {wallets.map((item, index) => (
+              {solWallet.map((item, index) => (
                 <WalletBox
                   key={index}
+                  title={title}
                   item={item}
                   index={index}
-                  wallets={wallets}
-                  setWallets={setWallets}
                   toast={toast}
                   showKey={showKey}
                   setShowKey={setShowKey}

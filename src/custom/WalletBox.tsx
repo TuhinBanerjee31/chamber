@@ -1,14 +1,26 @@
+import useWalletStore, { Wallet } from "@/store/store";
 import { Trash2, EyeOff, Eye, Copy } from "lucide-react";
 
+type Incoming = {
+  title: string,
+  item: Wallet,
+  index: number,
+  toast: (params: { title: string; description: string }) => void;
+  showKey: string[],
+  setShowKey: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
 const WalletBox = ({
+  title,
   item,
   index,
-  wallets,
-  setWallets,
   toast,
   showKey,
   setShowKey,
-} :any) => {
+}: Incoming) => {
+
+  const {clearWallet} = useWalletStore();
+
   return (
     <div key={item.path} className="border rounded-lg p-5">
       <div className="flex justify-between px-2">
@@ -16,11 +28,8 @@ const WalletBox = ({
         <Trash2
           className="text-red-900 transition-colors hover:text-red-800 cursor-pointer"
           onClick={() => {
-            const updatedWallet = wallets.filter((i :any) => {
-              return i.path != item.path;
-            });
-            setWallets(updatedWallet);
-            localStorage.setItem("solWallets", JSON.stringify(updatedWallet));
+            clearWallet(title, item.path)
+            // localStorage.setItem("solWallets", JSON.stringify(updatedWallet));
             toast({
               title: "Deleted",
               description: "This wallet was deleted successfully.",

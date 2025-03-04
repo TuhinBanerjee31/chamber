@@ -1,19 +1,29 @@
 import { Button } from "@/components/ui/simpleButton";
 import DailogBtn from "./DailogBtn";
+import useWalletStore from "@/store/store";
 
-const FncWallet = ({ title, generateWallet, setWallets, setMnemonic, toast } :any) => {
+type Incoming = {
+  title: string,
+  generateWallet: () => void,
+  toast: (params: { title: string; description: string }) => void;
+}
+
+const FncWallet = ({ title, generateWallet, toast }: Incoming) => {
+
+  const {clearAllWallets} = useWalletStore();
+
   return (
     <div className="flex justify-between flex-col md:flex-row gap-3">
       <h1 className="text-3xl font-bold">{title} Wallets</h1>
 
       <div className="flex gap-5">
-        <DailogBtn title={title} setMnemonic={setMnemonic} setWallets={setWallets} />
+        <DailogBtn title={title} />
         <Button onClick={() => generateWallet()}>Add New Wallet</Button>
         <Button
           className="bg-red-900 text-white transition-colors hover:bg-red-800"
           onClick={(e) => {
             e.preventDefault();
-            setWallets([]);
+            clearAllWallets(title);
             if(title == "Solana") {
               localStorage.removeItem("solWallets");
             }

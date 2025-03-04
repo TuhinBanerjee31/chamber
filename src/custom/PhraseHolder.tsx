@@ -4,10 +4,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import { Copy } from "lucide-react";
 
-const PhraseHolder = ({ mnemonic, toast } :any) => {
+type Incoming = {
+  mnemonic: string,
+  toast: (params: { title: string; description: string }) => void;
+}
+
+const PhraseHolder = ({ mnemonic, toast } :Incoming) => {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">

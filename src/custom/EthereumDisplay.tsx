@@ -1,41 +1,22 @@
 import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { ethers } from "ethers";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import GeneratePhrase from "./GeneratePhrase";
 import PhraseHolder from "./PhraseHolder";
 import FncWallet from "./FncWallet";
 import WalletBox from "./WalletBox";
+import useWalletStore from "@/store/store";
 
-type Wallet = {
-  path: string;
-  publicKey: string;
-  privateKey: string;
-  balance: string;
-};
+
 
 const EthereumDisplay = () => {
-  const [ethMnemonic, setEthMnemonic] = useState("");
-  const [wallets, setWallets] = useState<Wallet[]>([]);
-  const [showKey, setShowKey] = useState([]);
-
+  const [title, setTitle] = useState<string>("Ethereum");
+  const [showKey, setShowKey] = useState<string[]>([]);
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (
-      localStorage.getItem("ethMnemonic") &&
-      localStorage.getItem("ethWallets")
-    ) {
-      const val = localStorage.getItem("ethMnemonic") || "";
-      const wlt = localStorage.getItem("ethWallets") || "";
-
-      setEthMnemonic(JSON.parse(val));
-      setWallets(JSON.parse(wlt));
-      console.log(val.split(" "));
-      console.log("on mount");
-    }
-  }, []);
+  const {ethMnemonic, ethWallet, setMnemonic, addWallet} = useWalletStore()
 
   const getBalance = async (key: string) => {
     const res = await axios.post(import.meta.env.VITE_ETH_URL, {
@@ -52,18 +33,14 @@ const EthereumDisplay = () => {
     let val = ethMnemonic;
     if (ethMnemonic === "") {
       val = generateMnemonic();
-      setEthMnemonic(val);
-
-      localStorage.setItem("ethMnemonic", JSON.stringify(val));
-      console.log(val);
-      console.log("Not present");
+      setMnemonic(title, val);
     }
 
     const seed = mnemonicToSeedSync(val);
-    let path = `m/44'/60'/${wallets.length}'/0'`;
+    let path = `m/44'/60'/${ethWallet.length}'/0'`;
 
-    if (wallets.length > 1 && path === wallets[wallets.length - 1].path) {
-      path = `m/44'/60'/${wallets.length + 1}'/0'`;
+    if (ethWallet.length > 1 && path === ethWallet[ethWallet.length - 1].path) {
+      path = `m/44'/60'/${ethWallet.length + 1}'/0'`;
     }
 
     const hdNode = ethers.HDNodeWallet.fromSeed(seed);
@@ -84,9 +61,8 @@ const EthereumDisplay = () => {
       balance,
     };
 
-    const updatedWallet = [...wallets, wallet];
-    setWallets((prev) => [...prev, wallet]);
-    localStorage.setItem("ethWallets", JSON.stringify(updatedWallet));
+    addWallet(title, wallet);
+
     toast({
       title: "Here You Go",
       description: "Your solana wallet has been generated successfully.",
@@ -104,19 +80,16 @@ const EthereumDisplay = () => {
             <FncWallet
               title={"Ethereum"}
               generateWallet={generateWallet}
-              setWallets={setWallets}
-              setMnemonic={setEthMnemonic}
               toast={toast}
             />
 
             <div className="mt-5 flex flex-col gap-8">
-              {wallets.map((item, index) => (
+              {ethWallet.map((item, index) => (
                 <WalletBox
                   key={item.path}
+                  title={title}
                   item={item}
                   index={index}
-                  wallets={wallets}
-                  setWallets={setWallets}
                   toast={toast}
                   showKey={showKey}
                   setShowKey={setShowKey}
